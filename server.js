@@ -1,7 +1,10 @@
 const express = require('express')
 const app = express()
 var morgan = require('morgan')
-// const tasks = require('./routes/tasks');
+const userRouter = require('./router/user');
+const productRouter = require('./router/product');
+const orderRouter = require('./router/order');
+const categoryRouter = require('./router/category');
 const connectDB = require('./db/connect');
 require('dotenv').config()
 const notFound = require('./middleware/not-found');
@@ -9,10 +12,15 @@ const notFound = require('./middleware/not-found');
 app.use(express.json());
 app.use(morgan('dev'));
 
-// app.use('/api/v1/tasks', tasks);
-app.use('/', (req,res) => {
-    res.json({"mes": 'Welcome to home page'})
-});
+app.use('/api/v1/user', userRouter);
+app.use('/api/v1/product', productRouter);
+app.use('/api/v1/order', orderRouter);
+app.use('/api/v1/category', categoryRouter);
+
+// app.use('/', (req,res) => {
+//     res.json({"mes": 'Welcome to home page'})
+// });
+
 
 app.use(notFound);
 
