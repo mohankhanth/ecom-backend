@@ -3,13 +3,18 @@ const router = express.Router()
 
 const {
     getAllUser,
-    // createTask,
-    // getTask,
+    registerUser,
+    loginUser,
+    updateAuth
     // updateTask,
     // deleteTask
   } = require('../controllers/user')
 
-  router.route('/').get(getAllUser)
+  const {authenticationMiddleware, adminPermissions} = require('../middleware/authenticate')
+
+  router.route('/').get(authenticationMiddleware,adminPermissions(), getAllUser).put(authenticationMiddleware, updateAuth)
+  router.post('/register', registerUser)
+  router.post('/login', loginUser)
   
   // router.route('/').get(getAllTasks).post(createTask)
   // router.route('/:id').get(getTask).patch(updateTask).delete(deleteTask)
