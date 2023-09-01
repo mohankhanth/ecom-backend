@@ -28,6 +28,9 @@ const ProductSchema = new mongoose.Schema({
   active: {
     type: Boolean,
     default: true
+  },
+  cloudinary_id: {
+    type: String
   }
 },
 {

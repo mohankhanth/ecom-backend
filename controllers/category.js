@@ -1,4 +1,4 @@
-const Task = require('../models/category')
+const Category = require('../models/category')
 
 const getAllCategory = (req, res) => {
   res.status(201).json({ 'msg' :'All category' })
@@ -10,9 +10,19 @@ const getAllCategory = (req, res) => {
     // }
   }
 
+  const createCategory = async (req, res) => {
+    
+      try{
+          const catetory = await Category.create({...req.body})
+          res.status(201).json({ catetory })
+      } catch(error) {
+          return res.status(400).json({ msg: error })
+      }
+    }
+
   module.exports = {
-    getAllCategory
-    // createTask,
+    getAllCategory,
+    createCategory,
     // getTask,
     // updateTask,
     // deleteTask,
