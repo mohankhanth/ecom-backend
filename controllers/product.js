@@ -2,18 +2,16 @@ const Product = require('../models/product')
 const cloudinary = require("../utils/cloudinary");
 const upload = require("../utils/multer");
 
-const getAllProducts = (req, res) => {
-  res.status(201).json({ 'msg' :'All products' })
-    // try{
-    //     const task = await Task.find({})
-    //     res.status(201).json({ task })
-    // } catch(error) {
-    //     return res.status(400).json({ msg: error })
-    // }
+const getAllProducts = async (req, res) => {
+    try{
+        const product = await Product.find({})
+        res.status(201).json({ product })
+    } catch(error) {
+        return res.status(400).json({ msg: error })
+    }
   }
 
   const createProduct = async (req, res) => {
-    // res.status(201).json({ 'msg' :'Create products' })
       try{
         const result = await cloudinary.uploader.upload(req.file.path);
         const {name, price, Category} = req.body
@@ -22,8 +20,17 @@ const getAllProducts = (req, res) => {
         }
         const catetory = await Product.create({...fullData})
         res.status(201).json({ catetory })
-          // const task = await Task.find({})
-          // res.status(201).json({ task })
+      } catch(error) {
+          return res.status(400).json({ msg: error })
+      }
+    }
+
+    const getSingleProducts = async (req, res) => {
+      try{
+        const {id} = req.params
+        console.log(id)
+          const product = await Product.find({_id:id})
+          res.status(201).json({ product })
       } catch(error) {
           return res.status(400).json({ msg: error })
       }
@@ -32,7 +39,5 @@ const getAllProducts = (req, res) => {
   module.exports = {
     getAllProducts,
     createProduct,
-    // getTask,
-    // updateTask,
-    // deleteTask,
+    getSingleProducts
   }

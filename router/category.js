@@ -4,13 +4,14 @@ const {authenticationMiddleware, adminPermissions, onlyAdminMiddleware} = requir
 const {
     getAllCategory,
     createCategory,
-    // getTask,
+    getSingleCategory,
     // updateTask,
     // deleteTask
   } = require('../controllers/category')
 
 
   router.route('/').get(getAllCategory).post(onlyAdminMiddleware, createCategory)
+  router.route('/:id').get(getSingleCategory)
   
   // router.route('/').get(getAllTasks).post(createTask)
   // router.route('/:id').get(getTask).patch(updateTask).delete(deleteTask)

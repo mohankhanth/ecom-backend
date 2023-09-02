@@ -5,13 +5,15 @@ const upload = require("../utils/multer");
 
 const {
     getAllProducts,
-    createProduct
+    createProduct,
+    getSingleProducts
   } = require('../controllers/product')
 
   router.route('/').get(getAllProducts).post( upload.single("image"), createProduct)
+  router.route('/:id').get(getSingleProducts)
   
   // router.route('/').get(getAllTasks).post(createTask)
-  // router.route('/:id').get(getTask).patch(updateTask).delete(deleteTask)
+  // router.route('/:id').get(getSingleProducts).patch(updateTask).delete(deleteTask)
 
 
 

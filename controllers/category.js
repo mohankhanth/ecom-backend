@@ -1,13 +1,12 @@
 const Category = require('../models/category')
 
-const getAllCategory = (req, res) => {
-  res.status(201).json({ 'msg' :'All category' })
-    // try{
-    //     const task = await Task.find({})
-    //     res.status(201).json({ task })
-    // } catch(error) {
-    //     return res.status(400).json({ msg: error })
-    // }
+const getAllCategory = async (req, res) => {
+    try{
+        const category = await Category.find({})
+        res.status(201).json({ category })
+    } catch(error) {
+        return res.status(400).json({ msg: error })
+    }
   }
 
   const createCategory = async (req, res) => {
@@ -20,10 +19,19 @@ const getAllCategory = (req, res) => {
       }
     }
 
+    const getSingleCategory = async (req, res) => {
+      try{
+        const {id} = req.params
+        console.log(id)
+          const category = await Category.find({_id:id})
+          res.status(201).json({ category })
+      } catch(error) {
+          return res.status(400).json({ msg: error })
+      }
+    }
+
   module.exports = {
     getAllCategory,
     createCategory,
-    // getTask,
-    // updateTask,
-    // deleteTask,
+    getSingleCategory
   }
