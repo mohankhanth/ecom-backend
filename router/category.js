@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const {authenticationMiddleware, adminPermissions, onlyAdminMiddleware} = require('../middleware/authenticate')
+const {authenticationMiddleware, onlyAdminMiddleware} = require('../middleware/authenticate')
 const {
     getAllCategory,
     createCategory,

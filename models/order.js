@@ -4,25 +4,25 @@ const mongoose = require('mongoose')
 const OrderSchema = new mongoose.Schema({
     price: {
         type: Number,
-        required: true,
+        required: [true, 'Price should not be empty'],
       },
       product: {
         type: mongoose.Types.ObjectId,
-        ref: "product",
-        required: true,
+        ref: "Product",
+        required: [true, 'Product should not be empty'],
       },
       user: {
         type: mongoose.Types.ObjectId,
-        ref: "user",
-        required: true,
+        ref: "User",
+        required: [true, 'User should not be empty'],
       },
       address: {
         type: String,
-        required: true,
+        required: [true, 'Quantity should not be empty'],
       },
       quantity: {
         type: Number,
-        required: true,
+        required: [true, 'Quantity should not be empty'],
       },
       payment_method: {
         type: String,
