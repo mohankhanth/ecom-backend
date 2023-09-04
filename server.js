@@ -18,9 +18,9 @@ app.use(morgan('dev'));
 app.use(helmet());
 app.use(cors())
 
-app.use('/', (req,res) => {
-    res.json({"mes": 'Welcome to home page'})
-});
+// app.use('/', (req,res) => {
+//     res.json({"mes": 'Welcome to home page'})
+// });
 
 app.use('/api/v1/user', userRouter);
 app.use('/api/v1/product', productRouter);
