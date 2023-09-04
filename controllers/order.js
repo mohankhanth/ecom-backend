@@ -61,23 +61,41 @@ const getSingleUserOrders = async (req, res) => {
     }
   }
 
-  const deleteOrders = async (req, res) => {
-    // res.status(201).json({ 'msg' :'All orders' })
-      try{
-        const {orderId} = req.params
-        const order = await Order.deleteOne({_id: orderId})
-        if (!order) {
-          return res.status(400).json({msg:`No product with id : ${orderId}`});
-        }
-          res.status(201).json({ order })
-      } catch(error) {
-          return res.status(400).json({ msg: error.message })
+const deleteOrders = async (req, res) => {
+  // res.status(201).json({ 'msg' :'All orders' })
+    try{
+      const {orderId} = req.params
+      const order = await Order.deleteOne({_id: orderId})
+      if (!order) {
+        return res.status(400).json({msg:`No product with id : ${orderId}`});
       }
+        res.status(201).json({ order })
+    } catch(error) {
+        return res.status(400).json({ msg: error.message })
     }
+  }
+
+const updateOrders = async (req, res) => {
+  // res.status(201).json({ 'msg' :'All orders' })
+    try{
+      const {orderId} = req.params
+      const order = await Order.findOneAndUpdate({ _id: orderId }, req.body, {
+        new: true,
+        runValidators: true,
+      })
+      if (!order) {
+        return res.status(400).json({msg:`No product with id : ${orderId}`});
+      }
+        res.status(201).json({ order })
+    } catch(error) {
+        return res.status(400).json({ msg: error.message })
+    }
+  }
 
   module.exports = {
     getAllOrders,
     createOrders,
     getSingleUserOrders,
-    deleteOrders
+    deleteOrders,
+    updateOrders
   }

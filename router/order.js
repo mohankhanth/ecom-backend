@@ -6,12 +6,11 @@ const {
     getAllOrders,
     createOrders,
     deleteOrders,
-    // updateTask,
-    // deleteTask
+    updateOrders
   } = require('../controllers/order')
 
   router.route('/').get(onlyAdminMiddleware, getAllOrders).post(createOrders)
-  router.delete('/:orderId', deleteOrders)
+  router.route('/:orderId').delete(onlyAdminMiddleware, deleteOrders).put(updateOrders)
   
   // router.route('/').get(getAllTasks).post(createOrders)
   // router.route('/:id').get(getTask).patch(updateTask).delete(deleteTask)
