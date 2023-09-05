@@ -36,8 +36,51 @@ const getAllProducts = async (req, res) => {
       }
     }
 
+    const deleteProducts = async (req, res) => {
+      try {
+        // Find user by id
+        let product = await Product.findById(req.params.id);
+        // Delete image from cloudinary
+        await cloudinary.uploader.destroy(product.cloudinary_id);
+        // Delete user from db
+        await Product.findOneAndDelete(req.params.id);
+        res.json(product);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    const updateProducts = async (req, res) => {
+      try {
+        let product = await Product.findById(req.params.id);
+        // Delete image from cloudinary
+        await cloudinary.uploader.destroy(product.cloudinary_id);
+        // Upload image to cloudinary
+        let result;
+        if (req.file) {
+          result = await cloudinary.uploader.upload(req.file.path);
+        }
+        console.log('result', result)
+        const data = {
+          name: req.body.name || product.name,
+          price: req.body.price || product.price,
+          discount: req.body.discount || product.discount,
+          active: req.body.active || product.active,
+          Category: req.body.Category || product.Category,
+          productImage: result?.secure_url || product.productImage,
+          cloudinary_id: result?.public_id || product.cloudinary_id,
+        };
+        product = await Product.findByIdAndUpdate(req.params.id, data, { new: true, runValidators: true });
+        res.json({message:'Updated successfully', data});
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
   module.exports = {
     getAllProducts,
     createProduct,
-    getSingleProducts
+    getSingleProducts,
+    deleteProducts,
+    updateProducts
   }
