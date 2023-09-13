@@ -50,3 +50,6 @@ start();
 // https://github.com/itsmefarhan/nodejs-cloudinary-crud-operations/blob/master/routes/user.js
 // https://github.com/virendrapatel62/Eshop
 // https://github.com/virendrapatel62/ecommerce-Simple-Rest-Api-For-Developers
+// https://www.youtube.com/watch?v=R3y12qkTP2w&list=PLc2Ziv7051bZbwGZyuPHkS812sLSNuOiL&ab_channel=Let%27sProgram
+// https://www.linkedin.com/learning/websocket-communications-with-node-and-angular
+// https://github.com/yshashi/AngularAuthYtUI/blob/master/src/app/services/auth.service.ts

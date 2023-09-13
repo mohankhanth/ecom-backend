@@ -1,4 +1,5 @@
 const Category = require('../models/category')
+const Product = require('../models/product')
 
 const getAllCategory = async (req, res) => {
     try{
@@ -30,8 +31,21 @@ const getAllCategory = async (req, res) => {
       }
     }
 
+    // const getProductByCategory = async (req, res) => {
+    //   console.log('Mohan swamy', req.query)
+    //   try{
+    //     const {categoryId} = req.query
+    //     console.log(categoryId)
+    //       const category = await Product.find({Category:categoryId})
+    //       res.status(201).json({ count: category.length, category })
+    //   } catch(error) {
+    //       return res.status(400).json({ msg: error })
+    //   }
+    // }
+
   module.exports = {
     getAllCategory,
     createCategory,
-    getSingleCategory
+    getSingleCategory,
+    // getProductByCategory
   }

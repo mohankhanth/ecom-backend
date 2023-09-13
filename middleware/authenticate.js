@@ -47,7 +47,7 @@ const adminPermissions = () => {
       const { userId, isAdmin, email } = decoded
       req.user = { userId, isAdmin, email }
       if (!req.user.isAdmin) {
-        return res.status(401).json({ msg: 'Only admin can create category' })
+        return res.status(401).json({ msg: 'Only admin can access this page' })
       }
       next()
     } catch (error) {

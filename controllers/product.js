@@ -3,13 +3,15 @@ const cloudinary = require("../utils/cloudinary");
 const upload = require("../utils/multer");
 
 const getAllProducts = async (req, res) => {
-    try{
-        const product = await Product.find({})
-        res.status(201).json({ product })
+  try{
+      const categoryId = req.query.categoryId
+      const isQuery = categoryId ? {Category:categoryId} : {}
+      const product = await Product.find(isQuery)
+      res.status(201).json({count:product.length, product })
     } catch(error) {
         return res.status(400).json({ msg: error })
     }
-  }
+}
 
   const createProduct = async (req, res) => {
       try{
