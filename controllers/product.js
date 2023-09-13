@@ -4,6 +4,7 @@ const upload = require("../utils/multer");
 
 const getAllProducts = async (req, res) => {
   try{
+    console.log('Mohan swamy',req.query)
       const categoryId = req.query.categoryId
       const isQuery = categoryId ? {Category:categoryId} : {}
       const product = await Product.find(isQuery)
