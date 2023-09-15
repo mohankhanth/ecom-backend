@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const Order = require('../models/order')
 const Product = require('../models/product')
 
@@ -20,28 +21,50 @@ const getAllOrders = async (req, res) => {
   }
 
 const createOrders = async (req, res) => {
-  try{
-    const {orders} = req.body
-    if (!orders || orders.length < 1) {
-      return res.status(400).json({msg:'No cart items provided'});
-    }
 
-    for (index in orders) {
-      const productId = await Product.findOne({ _id: orders[index].product });
-      console.log('productId', productId)
-      if (!productId) {
-        return res.status(400).json({msg:`No product with id : ${orders[index].product}`});
-      }
-      const { price } = productId;
-      orders[index].price = price
-    }
-    const newOrder = await Order.create(orders)
-    res.status(201).json({ msg: newOrder })
+  let firstname = req.body.firstname;
+  let lastname = req.body.lastname;
+  let address = req.body.address;
 
-    console.log('orders', newOrder)
-    } catch(error) {
-        return res.status(400).json({ msg: error.message })
-    }
+  console.log(firstname, lastname, address, 'address')
+
+  if (!firstname || !lastname || !address) {
+    return res.status(400).json({ message: "firstName , lastName , address Required..", } );
+  }
+
+
+  let carts = JSON.parse(JSON.stringify(req.body.products));
+  if (!carts) {
+    res.json({
+      error: {
+        message: "Products Required..",
+      },
+    });
+    return;
+  }
+
+  let orders = [];
+  for (let i = 0; i < carts.length; i++) {
+    orders.push(createOrder(req, carts[i], firstname, lastname, address));
+  }
+
+
+  const newOrder = await Order.create(orders)
+  console.log(newOrder);
+  res.status(201).json({ message:"Order was created", orders: newOrder })
+  }
+
+  function createOrder(req, productInfo, firstName, lastName, address) {
+    return new Order({
+      _id:new mongoose.Types.ObjectId(),
+      product: productInfo.product,
+      quantity: productInfo.quantity,
+      price: productInfo.price,
+      user: req.user.userId,
+      firstname: firstName,
+      lastname: lastName,
+      address: address,
+    });
   }
 
 const getSingleUserOrders = async (req, res) => {

@@ -9,7 +9,7 @@ const {
     updateOrders
   } = require('../controllers/order')
 
-  router.route('/').get(onlyAdminMiddleware, getAllOrders).post(createOrders)
+  router.route('/').get(onlyAdminMiddleware, getAllOrders).post(authenticationMiddleware, createOrders)
   router.route('/:orderId').delete(onlyAdminMiddleware, deleteOrders).put(updateOrders)
   
   // router.route('/').get(getAllTasks).post(createOrders)

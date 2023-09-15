@@ -2,6 +2,14 @@ const { boolean } = require('joi')
 const mongoose = require('mongoose')
 
 const OrderSchema = new mongoose.Schema({
+    firstname: {
+      type: String,
+      required: [true, 'First name should not be empty'],
+    },
+    lastname: {
+      type: String,
+      required: [true, 'Last name should not be empty'],
+    },
     price: {
         type: Number,
         required: [true, 'Price should not be empty'],
@@ -30,8 +38,8 @@ const OrderSchema = new mongoose.Schema({
         default: "COD",
       },
       status: {
-        type: Boolean,
-        default: false
+        type: mongoose.Schema.Types.String,
+        default: "pending",
       }
 },
 {

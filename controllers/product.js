@@ -3,11 +3,30 @@ const cloudinary = require("../utils/cloudinary");
 const upload = require("../utils/multer");
 
 const getAllProducts = async (req, res) => {
+
+  let filter = {
+    price: {
+      $lte: 9999999999,
+      $gte: 0,
+    },
+  };
+  if (!isNaN(req.query.max)) {
+    filter.price["$lte"] = req.query.max;
+  }
+  if (req.query.categoryId) {
+    filter.Category = req.query.categoryId;
+  }
+  if (!isNaN(req.query.min)) {
+    filter.price["$gte"] = req.query.min;
+  }
+
+  console.log('req.query', req.query);
+  console.log('filter', filter);
   try{
-    console.log('Mohan swamy',req.query)
-      const categoryId = req.query.categoryId
-      const isQuery = categoryId ? {Category:categoryId} : {}
-      const product = await Product.find(isQuery)
+    // console.log('Mohan swamy',req.query)
+    //   const categoryId = req.query.categoryId
+    //   const isQuery = categoryId ? {Category:categoryId} : {}
+      const product = await Product.find(filter)
       res.status(201).json({count:product.length, product })
     } catch(error) {
         return res.status(400).json({ msg: error })
