@@ -14,7 +14,7 @@ const getAllOrders = async (req, res) => {
           },
           {path: 'user', select: '-password'}
         ])
-        res.status(201).json({ order })
+        res.status(201).json( order )
     } catch(error) {
         return res.status(400).json({ msg: error })
     }
